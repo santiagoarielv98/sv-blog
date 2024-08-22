@@ -1,4 +1,7 @@
 import Image from "next/image";
+import type { Post } from "./types/post";
+
+export const d: Post[] = [];
 
 export default function Home() {
   return (
