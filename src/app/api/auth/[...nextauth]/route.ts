@@ -1,4 +1,4 @@
-import { credentials } from "@/app/data";
+import { credentials } from "@/lib/constants";
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";

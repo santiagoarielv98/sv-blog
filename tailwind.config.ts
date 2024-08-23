@@ -6,15 +6,6 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  theme: {
-    extend: {
-      fontFamily: {
-        roboto: ["Roboto"],
-        tajawal: ["Tajawal"],
-      },
-    },
-  },
-  variants: {},
   plugins: [],
 };
 export default config;

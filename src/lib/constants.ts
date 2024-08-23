@@ -1,5 +1,5 @@
-import type { Post } from "./types/post";
-import type { User } from "./types/user";
+import type { Post } from "../types/post";
+import type { User } from "../types/user";
 
 export const credentials = {
   username: "demo",

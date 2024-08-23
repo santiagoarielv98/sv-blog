@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.52.1",
     "next": "14.2.6",
     "next-auth": "^4.24.7",
     "react": "^18",
@@ -16,6 +17,7 @@
     "sv-blogs": "file:"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.52.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
