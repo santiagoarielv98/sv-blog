@@ -1,6 +1,11 @@
 import type { Post } from "./types/post";
 import type { User } from "./types/user";
 
+export const credentials = {
+  username: "demo",
+  password: "12345678",
+};
+
 export const users: User[] = [
   {
     name: "Alex John",
