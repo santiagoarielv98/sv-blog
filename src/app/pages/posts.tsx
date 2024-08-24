@@ -15,15 +15,13 @@ export default function Posts() {
       <h1>Posts</h1>
       <ul>
         {data?.map((post) => (
-          <li key={post.id}>{post.title}</li>
+          <li key={post.id}>
+            <article className='prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none' dangerouslySetInnerHTML={{ __html: post.content }}></article>
+          </li>
         ))}
       </ul>
       <h1>Comments</h1>
-      {/* <ul>
-        {commentsData.map((comment) => (
-          <li key={comment.id}>{comment.body}</li>
-        ))}
-      </ul> */}
-    </div>
+
+    </div >
   );
 }
