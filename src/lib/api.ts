@@ -1,16 +1,16 @@
-import type { Post } from "../types/post";
+import type { CreatePost, Post } from "../types/post";
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export function getPosts(): Promise<Post[]> {
+export async function getPosts(): Promise<Post[]> {
   return fetch(`${baseUrl}/posts`).then((res) => res.json());
 }
 
-export function getPost(slug: string): Promise<Post> {
+export async function getPost(slug: string): Promise<Post> {
   return fetch(`${baseUrl}/posts/${slug}`).then((res) => res.json());
 }
 
-export function createPost(post: Omit<Post, 'id'>, token: string): Promise<Post> {
+export async function createPost(post: CreatePost, token: string): Promise<Post> {
   return fetch(`${baseUrl}/posts`, {
     method: "POST",
     headers: {

@@ -6,3 +6,8 @@ export interface Post {
   publishedAt: string;
   slug: string;
 }
+
+export interface CreatePost {
+  title: string;
+  content: string;
+}

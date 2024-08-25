@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Link from "next/link";
 import "./globals.css";
 import Providers from "./providers";
 
@@ -23,6 +24,17 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <div className="min-h-screen bg-gray-100 max-w-5xl mx-auto">
+          <nav>
+            <Link href="/">
+              Home
+            </Link>
+            <Link href="/create">
+              Create
+            </Link>
+            <Link href="/login">
+              Login
+            </Link>
+          </nav>
           <Providers>{children}</Providers>
         </div>
       </body>
