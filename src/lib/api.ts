@@ -20,3 +20,12 @@ export async function createPost(post: CreatePost, token: string): Promise<Post>
     body: JSON.stringify(post),
   }).then((res) => res.json());
 }
+
+export async function deletePost(id: string, token: string): Promise<void> {
+  return fetch(`${baseUrl}/posts/${id}`, {
+    method: "DELETE",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    },
+  }).then((res) => res.json());
+}
