@@ -3,6 +3,7 @@
 
 import { getPosts } from "@/lib/api";
 import { useQuery } from "@tanstack/react-query";
+import Lista from "../components/lista";
 
 export default function Posts() {
   const { data } = useQuery({
@@ -15,13 +16,9 @@ export default function Posts() {
       <h1>Posts</h1>
       <ul>
         {data?.map((post) => (
-          <li key={post.id}>
-            <article className='prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none' dangerouslySetInnerHTML={{ __html: post.content }}></article>
-          </li>
+          <Lista key={post.id} post={post} />
         ))}
       </ul>
-      <h1>Comments</h1>
-
     </div >
   );
 }
