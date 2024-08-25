@@ -6,6 +6,9 @@ export function getPosts(): Promise<Post[]> {
   return fetch(`${baseUrl}/posts`).then((res) => res.json());
 }
 
+export function getPost(slug: string): Promise<Post> {
+  return fetch(`${baseUrl}/posts/${slug}`).then((res) => res.json());
+}
 
 export function createPost(post: Omit<Post, 'id'>, token: string): Promise<Post> {
   return fetch(`${baseUrl}/posts`, {

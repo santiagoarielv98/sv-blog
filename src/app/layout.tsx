@@ -22,7 +22,9 @@ export default function RootLayout({
         <meta charSet="utf-8" />
       </head>
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <div className="min-h-screen bg-gray-100 max-w-5xl mx-auto">
+          <Providers>{children}</Providers>
+        </div>
       </body>
     </html>
   );

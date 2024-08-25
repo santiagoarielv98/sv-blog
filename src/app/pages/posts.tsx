@@ -12,13 +12,10 @@ export default function Posts() {
   });
 
   return (
-    <div>
-      <h1>Posts</h1>
-      <ul>
-        {data?.map((post) => (
-          <Lista key={post.id} post={post} />
-        ))}
-      </ul>
-    </div >
+    <ul>
+      {data?.map((post) => (
+        <Lista key={post.id} post={post} />
+      ))}
+    </ul>
   );
 }
