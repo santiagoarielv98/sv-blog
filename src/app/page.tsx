@@ -1,10 +1,10 @@
+import BlogInterface from "@/components/BlogInterface";
 import { getPosts } from "@/lib/api";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import Posts from "./posts";
 
 export default async function PostsPage() {
   const queryClient = new QueryClient();
@@ -16,9 +16,7 @@ export default async function PostsPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div>
-        <Posts />
-      </div>
+      <BlogInterface />
     </HydrationBoundary>
   );
 }

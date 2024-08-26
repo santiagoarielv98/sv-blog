@@ -1,6 +1,6 @@
+import BlogPostDetail from '@/components/BlogPostDetail';
 import { getPost } from '@/lib/api';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-import PostDetail from './post-detail';
 
 
 async function PostDetailPage({ params }: { params: { slug: string } }) {
@@ -15,7 +15,7 @@ async function PostDetailPage({ params }: { params: { slug: string } }) {
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
             <div>
-                <PostDetail />
+                <BlogPostDetail />
             </div>
         </HydrationBoundary>)
 }
