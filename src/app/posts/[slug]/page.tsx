@@ -14,9 +14,7 @@ async function PostDetailPage({ params }: { params: { slug: string } }) {
 
     return (
         <HydrationBoundary state={dehydrate(queryClient)}>
-            <div>
-                <BlogPostDetail />
-            </div>
+            <BlogPostDetail />
         </HydrationBoundary>)
 }
 

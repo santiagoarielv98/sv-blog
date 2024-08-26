@@ -29,3 +29,7 @@ export async function deletePost(id: string, token: string): Promise<void> {
     },
   }).then((res) => res.json());
 }
+
+export async function getMostUsedTags(): Promise<{ name: string, count: number }[]> {
+  return fetch(`${baseUrl}/tags/most-used`).then((res) => res.json());
+}

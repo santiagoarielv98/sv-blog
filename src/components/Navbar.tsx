@@ -12,7 +12,7 @@ function Navbar() {
                 </h1>
                 <nav className="hidden md:flex space-x-4">
                     <Link href="/" className="hover:underline">Home</Link>
-                    <Link href="/" className="hover:underline">About</Link>
+                    <Link href="/tags" className="hover:underline">Tags</Link>
                     <Link href="/" className="hover:underline">Contact</Link>
                 </nav>
                 <Button variant="ghost" size="icon" className="md:hidden">
