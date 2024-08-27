@@ -1,5 +1,5 @@
-import React from "react";
-import Tiptap from "./editor";
+import React from 'react';
+import Tiptap from './editor';
 
 function CreatePostPage() {
   return (

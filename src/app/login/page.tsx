@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { signIn } from "next-auth/react";
+import { signIn } from 'next-auth/react';
 
 function LoginPage() {
   return (

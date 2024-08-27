@@ -1,23 +1,23 @@
-import { credentials } from "@/lib/constants";
-import type { NextAuthOptions } from "next-auth";
-import NextAuth from "next-auth";
-import Credentials from "next-auth/providers/credentials";
+import { credentials } from '@/lib/constants';
+import type { NextAuthOptions } from 'next-auth';
+import NextAuth from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
 
 export const authOptions: NextAuthOptions = {
   providers: [
     Credentials({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
         username: {
-          label: "Username",
-          type: "text",
-          placeholder: "Username",
+          label: 'Username',
+          type: 'text',
+          placeholder: 'Username',
           value: credentials.username,
         },
         password: {
-          label: "Password",
-          type: "password",
-          placeholder: "Password",
+          label: 'Password',
+          type: 'password',
+          placeholder: 'Password',
           value: credentials.password,
         },
       },
@@ -25,8 +25,8 @@ export const authOptions: NextAuthOptions = {
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`,
           {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               username: credentials?.username,
               password: credentials?.password,

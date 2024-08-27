@@ -1,6 +1,6 @@
-import type { Author } from "./author";
-import type { Tag } from "./tags";
-import type { User } from "./user";
+import type { Author } from './author';
+import type { Tag } from './tags';
+import type { User } from './user';
 
 export interface Post {
   id: string;

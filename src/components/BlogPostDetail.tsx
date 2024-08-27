@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPost } from "@/lib/api";
-import { useQuery } from "@tanstack/react-query";
-import { Calendar, Linkedin, Tag } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import type { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { MDXRemote } from "next-mdx-remote";
-import { serialize } from "next-mdx-remote/serialize";
-import { useEffect, useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { getPost } from '@/lib/api';
+import { useQuery } from '@tanstack/react-query';
+import { Calendar, Linkedin, Tag } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+import { useEffect, useState } from 'react';
 
 export default function BlogPostDetail() {
   const [content, setContent] = useState<MDXRemoteSerializeResult | null>(null);
   const { slug }: { slug: string } = useParams();
 
   const { data: post } = useQuery({
-    queryKey: ["posts", slug],
+    queryKey: ['posts', slug],
     queryFn: () => getPost(slug as string),
   });
 
@@ -48,10 +48,10 @@ export default function BlogPostDetail() {
               <Calendar className="h-4 w-4 mr-2" />
               <span>
                 {post?.created_at &&
-                  new Date(post?.created_at).toLocaleDateString("en-US", {
-                    month: "long",
-                    day: "numeric",
-                    year: "numeric",
+                  new Date(post?.created_at).toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
                   })}
               </span>
             </div>
@@ -130,9 +130,9 @@ export default function BlogPostDetail() {
             <CardContent>
               <ul className="space-y-4">
                 {[
-                  "The Ethics of AI",
-                  "Machine Learning Basics",
-                  "AI in Healthcare",
+                  'The Ethics of AI',
+                  'Machine Learning Basics',
+                  'AI in Healthcare',
                 ].map((post, index) => (
                   <li key={index} className="flex items-center space-x-4">
                     <Image

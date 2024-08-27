@@ -1,4 +1,4 @@
-import type { CreatePost, Post } from "../types/post";
+import type { CreatePost, Post } from '../types/post';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -15,9 +15,9 @@ export async function createPost(
   token: string,
 ): Promise<Post> {
   return fetch(`${baseUrl}/articles`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify(post),
@@ -26,7 +26,7 @@ export async function createPost(
 
 export async function deletePost(id: string, token: string): Promise<void> {
   return fetch(`${baseUrl}/articles/${id}`, {
-    method: "DELETE",
+    method: 'DELETE',
     headers: {
       Authorization: `Bearer ${token}`,
     },

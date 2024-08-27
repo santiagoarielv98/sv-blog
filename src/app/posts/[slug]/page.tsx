@@ -1,16 +1,16 @@
-import BlogPostDetail from "@/components/BlogPostDetail";
-import { getPost } from "@/lib/api";
+import BlogPostDetail from '@/components/BlogPostDetail';
+import { getPost } from '@/lib/api';
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
-} from "@tanstack/react-query";
+} from '@tanstack/react-query';
 
 async function PostDetailPage({ params }: { params: { slug: string } }) {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["posts", params.slug],
+    queryKey: ['posts', params.slug],
     queryFn: () => getPost(params.slug),
   });
 

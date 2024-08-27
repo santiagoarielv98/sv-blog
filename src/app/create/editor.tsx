@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import { createPost } from "@/lib/api";
-import type { CreatePost } from "@/types/post";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { createPost } from '@/lib/api';
+import type { CreatePost } from '@/types/post';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 function Tiptap() {
-  const [title, setTitle] = useState("");
+  const [title, setTitle] = useState('');
   const { data } = useSession();
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -18,8 +18,8 @@ function Tiptap() {
   const mutation = useMutation({
     mutationFn: (newPost: CreatePost) => createPost(newPost, data!.token!),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-      router.push("/");
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
+      router.push('/');
     },
   });
 
@@ -28,7 +28,7 @@ function Tiptap() {
     editorProps: {
       attributes: {
         class:
-          "prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none",
+          'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
       },
     },
     content: `

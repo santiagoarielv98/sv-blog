@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { getPosts } from "@/lib/api";
-import { useQuery } from "@tanstack/react-query";
-import { Search } from "lucide-react";
-import Link from "next/link";
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { getPosts } from '@/lib/api';
+import { useQuery } from '@tanstack/react-query';
+import { Search } from 'lucide-react';
+import Link from 'next/link';
 
 export default function BlogInterface() {
   const { data: articles = [] } = useQuery({
-    queryKey: ["posts"],
+    queryKey: ['posts'],
     queryFn: () => getPosts(),
   });
   return (

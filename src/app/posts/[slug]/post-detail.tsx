@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { deletePost, getPost } from "@/lib/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
-import { useParams, useRouter } from "next/navigation";
+import { deletePost, getPost } from '@/lib/api';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useSession } from 'next-auth/react';
+import { useParams, useRouter } from 'next/navigation';
 
 function PostDetail() {
   const queryClient = useQueryClient();
@@ -16,14 +16,14 @@ function PostDetail() {
     mutationFn: () => deletePost(data!.id, sessionData!.token!),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["posts"],
+        queryKey: ['posts'],
       });
-      router.push("/");
+      router.push('/');
     },
   });
 
   const { data } = useQuery({
-    queryKey: ["posts", slug],
+    queryKey: ['posts', slug],
     queryFn: () => getPost(slug as string),
   });
   if (!data) return <p>Not found</p>;
