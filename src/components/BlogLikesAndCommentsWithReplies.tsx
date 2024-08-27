@@ -10,31 +10,6 @@ import { useParams } from 'next/navigation';
 import CommentComponent from './CommentComponent';
 import type { Post } from '@/types/post';
 
-const comments = [
-  {
-    id: 1,
-    author: 'Alice Johnson',
-    content: 'Great article! I learned a lot from this.',
-    likes: 5,
-    replies: [],
-  },
-  {
-    id: 2,
-    author: 'Bob Smith',
-    content:
-      'I have a question about the third point. Can you elaborate more on that?',
-    likes: 2,
-    replies: [],
-  },
-  {
-    id: 3,
-    author: 'Charlie Brown',
-    content: 'This is exactly what I was looking for. Thanks for sharing!',
-    likes: 8,
-    replies: [],
-  },
-];
-
 export default function BlogLikesAndCommentsWithReplies() {
   const { slug }: { slug: string } = useParams();
 
@@ -109,7 +84,7 @@ export default function BlogLikesAndCommentsWithReplies() {
             </Button>
           </form>
           <div className="mt-8 space-y-6">
-            {comments.map((comment) => (
+            {post?.comments?.map((comment) => (
               <CommentComponent key={comment.id} comment={comment} />
             ))}
           </div>

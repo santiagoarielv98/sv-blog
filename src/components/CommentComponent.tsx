@@ -10,15 +10,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
+import type { Comment } from '@/types/comments';
 import { MessageCircle, Send, ThumbsUp } from 'lucide-react';
-
-interface Comment {
-  id: number;
-  author: string;
-  content: string;
-  likes: number;
-  replies: Comment[];
-}
 
 const CommentComponent = ({ comment }: { comment: Comment }) => {
   // const [isReplying, setIsReplying] = useState(false);
@@ -39,11 +32,11 @@ const CommentComponent = ({ comment }: { comment: Comment }) => {
         <div className="flex items-center gap-4">
           <Avatar>
             <AvatarImage
-              src={`https://api.dicebear.com/6.x/initials/svg?seed=${comment.author}`}
-              alt={comment.author}
+              src={`https://api.dicebear.com/6.x/initials/svg?seed=${comment.user.username}`}
+              alt={comment.user.username}
             />
             <AvatarFallback>
-              {comment.author
+              {comment.user.username
                 .split(' ')
                 .map((n) => n[0])
                 .join('')}
@@ -51,7 +44,7 @@ const CommentComponent = ({ comment }: { comment: Comment }) => {
           </Avatar>
           <div>
             <CardTitle className="text-sm font-medium">
-              {comment.author}
+              {comment.user.username}
             </CardTitle>
           </div>
         </div>
@@ -62,7 +55,7 @@ const CommentComponent = ({ comment }: { comment: Comment }) => {
       <CardFooter className="flex justify-between">
         <Button variant="ghost" size="sm" className="flex items-center gap-2">
           <ThumbsUp className="w-4 h-4" />
-          <span>{comment.likes}</span>
+          {/* <span>{comment.likes}</span> */}0
         </Button>
         <Button
           variant="ghost"
@@ -96,10 +89,10 @@ const CommentComponent = ({ comment }: { comment: Comment }) => {
           </CardContent>
         )
       }
-      {comment.replies.length > 0 && (
+      {comment.replies?.length > 0 && (
         <CardContent>
           <div className="pl-6 border-l-2 border-muted">
-            {comment.replies.map((reply) => (
+            {comment.replies?.map((reply) => (
               <CommentComponent
                 key={reply.id}
                 comment={reply}

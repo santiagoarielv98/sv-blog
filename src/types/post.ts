@@ -1,4 +1,5 @@
 import type { Author } from './author';
+import type { Comment } from './comments';
 import type { Tag } from './tags';
 import type { User } from './user';
 
@@ -17,9 +18,13 @@ export interface Post {
   thumbnail: string;
   likesCount: number;
   liked: number;
+  comments: Comment[];
 }
 
 export interface CreatePost {
   title: string;
+  summary: string;
   content: string;
+  thumbnail?: string;
+  published?: boolean;
 }

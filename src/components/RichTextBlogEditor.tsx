@@ -1,11 +1,14 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Toggle } from '@/components/ui/toggle';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Toggle } from '@/components/ui/toggle';
+import { createPost } from '@/lib/api';
+import type { CreatePost } from '@/types/post';
+import { useMutation } from '@tanstack/react-query';
 import { Color } from '@tiptap/extension-color';
 import Dropcursor from '@tiptap/extension-dropcursor';
 
@@ -19,33 +22,32 @@ import TaskItem from '@tiptap/extension-task-item';
 import TaskList from '@tiptap/extension-task-list';
 import TextAlign from '@tiptap/extension-text-align';
 import TextStyle from '@tiptap/extension-text-style';
-import { EditorProvider, useCurrentEditor } from '@tiptap/react';
+import type { Editor } from '@tiptap/react';
+import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import {
-  Eye,
-  Image as ImageIcon,
-  Save,
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
   // iconos para el editor
   Bold,
-  Italic,
-  Strikethrough,
   Code,
+  Eye,
+  Image as ImageIcon,
+  Italic,
   List,
   ListOrdered,
-  Undo,
-  Redo,
   Minus,
   Quote,
-  AlignLeft,
-  AlignCenter,
-  AlignRight,
+  Redo,
+  Save,
+  Strikethrough,
   Text,
+  Undo,
 } from 'lucide-react';
 import { useState } from 'react';
 
-const MenuBar = () => {
-  const { editor } = useCurrentEditor();
-
+const MenuBar = ({ editor }: { editor: Editor }) => {
   if (!editor) {
     return null;
   }
@@ -266,6 +268,31 @@ export default function RichTextBlogEditor() {
   const [title, setTitle] = useState('');
   const [tags, setTags] = useState('');
 
+  const editor = useEditor({
+    extensions: extensions,
+    content: '<p>Hello World! 🌎️</p>',
+    immediatelyRender: true,
+    editorProps: {
+      attributes: {
+        class:
+          'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl sm:m-5 focus:outline-none',
+      },
+    },
+    shouldRerenderOnTransaction: false,
+  });
+
+  const mutation = useMutation({
+    mutationFn: (data: CreatePost) => createPost(data),
+  });
+
+  const handleSave = () => {
+    mutation.mutate({
+      title,
+      content: editor?.getHTML() || '',
+      summary: editor?.getText().slice(0, 100),
+    });
+  };
+
   return (
     <main className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">Create New Blog Post</h1>
@@ -273,6 +300,8 @@ export default function RichTextBlogEditor() {
       <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
         <div className="space-y-4">
           <Input
+            required
+            minLength={3}
             type="text"
             placeholder="Enter your blog post title"
             value={title}
@@ -280,19 +309,11 @@ export default function RichTextBlogEditor() {
             className="text-xl font-semibold"
           />
           <Card>
+            <CardHeader>
+              <MenuBar editor={editor} />
+            </CardHeader>
             <CardContent className="p-4">
-              <EditorProvider
-                editorProps={{
-                  attributes: {
-                    class:
-                      'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
-                  },
-                }}
-                slotBefore={<MenuBar />}
-                extensions={extensions}
-                content={content}
-                immediatelyRender
-              />
+              <EditorContent editor={editor} />
             </CardContent>
           </Card>
         </div>
@@ -321,7 +342,7 @@ export default function RichTextBlogEditor() {
                 />
               </div>
               <div className="flex space-x-2">
-                <Button className="w-full">
+                <Button className="w-full" onClick={handleSave}>
                   <Save className="w-4 h-4 mr-2" />
                   Save
                 </Button>
@@ -351,56 +372,3 @@ export default function RichTextBlogEditor() {
     </main>
   );
 }
-
-const content = `
-<h2>
-  Hi there,
-</h2>
- <table style="width:100%">
-<tr>
-  <th>Firstname</th>
-  <th>Lastname</th>
-  <th>Age</th>
-</tr>
-<tr>
-  <td>Jill</td>
-  <td>Smith</td>
-  <td>50</td>
-</tr>
-<tr>
-  <td>Eve</td>
-  <td>Jackson</td>
-  <td>94</td>
-</tr>
-<tr>
-  <td>John</td>
-  <td>Doe</td>
-  <td>80</td>
-</tr>
-</table>
-<p>
-  this is a basic <em>basic</em> example of <strong>Tiptap</strong>. Sure, there are all kind of basic text styles you’d probably expect from a text editor. But wait until you see the lists:
-</p>
-<ul>
-  <li>
-    That’s a bullet list with one …
-  </li>
-  <li>
-    … or two list items.
-  </li>
-</ul>
-<p>
-  Isn’t that great? And all of that is editable. But wait, there’s more. Let’s try a code block:
-</p>
-<pre><code class="language-css">body {
-display: none;
-}</code></pre>
-<p>
-  I know, I know, this is impressive. It’s only the tip of the iceberg though. Give it a try and click a little bit around. Don’t forget to check the other examples too.
-</p>
-<blockquote>
-  Wow, that’s amazing. Good work, boy! 👏
-  <br />
-  — Mom
-</blockquote>
-`;

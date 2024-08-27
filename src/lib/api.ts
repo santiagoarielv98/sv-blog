@@ -21,13 +21,13 @@ export async function getPost(slug: string): Promise<Post> {
 
 export async function createPost(
   post: CreatePost,
-  token: string,
+  /* token: string, */
 ): Promise<Post> {
   return httpGet(`${baseUrl}/articles`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
+      /* Authorization: `Bearer ${token}`, */
     },
     body: JSON.stringify(post),
   }).then((res) => res.json());
