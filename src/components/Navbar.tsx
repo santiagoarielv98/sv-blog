@@ -20,6 +20,9 @@ function Navbar() {
           <Link href="/" className="hover:underline">
             Contact
           </Link>
+          <Link href="/create" className="hover:underline">
+            Create
+          </Link>
         </nav>
         <Button variant="ghost" size="icon" className="md:hidden">
           <Menu className="h-6 w-6" />

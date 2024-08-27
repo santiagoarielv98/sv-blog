@@ -1,10 +1,11 @@
+import RichTextBlogEditor from '@/components/RichTextBlogEditor';
 import React from 'react';
-import Tiptap from './editor';
+// import Tiptap from './editor';
 
 function CreatePostPage() {
   return (
     <div>
-      <Tiptap />
+      <RichTextBlogEditor />
     </div>
   );
 }
