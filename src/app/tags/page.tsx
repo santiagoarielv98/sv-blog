@@ -1,13 +1,10 @@
 import MostUsedTags from '@/components/MostUsedTags';
 import { getMostUsedTags } from '@/lib/api';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
+import getQueryClient from '@/lib/getQueryClient';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
 async function TagsPage() {
-  const queryClient = new QueryClient();
+  const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ['tags'],
