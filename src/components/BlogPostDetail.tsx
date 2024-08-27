@@ -1,33 +1,20 @@
-'use client';
-
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getPost } from '@/lib/api';
-import { useQuery } from '@tanstack/react-query';
+import getQueryClient from '@/lib/getQueryClient';
 import { Calendar, Linkedin, Tag } from 'lucide-react';
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
-import { MDXRemote } from 'next-mdx-remote';
-import { serialize } from 'next-mdx-remote/serialize';
-import { useEffect, useState } from 'react';
 
-export default function BlogPostDetail() {
-  const [content, setContent] = useState<MDXRemoteSerializeResult | null>(null);
-  const { slug }: { slug: string } = useParams();
+export default async function BlogPostDetail({ slug }: { slug: string }) {
+  const queryClient = getQueryClient();
 
-  const { data: post } = useQuery({
+  const post = await queryClient.fetchQuery({
     queryKey: ['posts', slug],
     queryFn: () => getPost(slug as string),
   });
-
-  useEffect(() => {
-    if (post?.content) {
-      serialize(post.content, { parseFrontmatter: true }).then(setContent);
-    }
-  }, [post?.content]);
 
   return (
     <main className="container mx-auto px-4 py-8">
@@ -64,7 +51,7 @@ export default function BlogPostDetail() {
             className="w-full h-64 object-cover rounded-lg mb-6"
           />
           <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none max-w-none">
-            {content && <MDXRemote {...content} />}
+            {<MDXRemote source={post.content} />}
           </div>
           <div className="mt-6 flex flex-wrap gap-2">
             {post?.tags.map((tag) => (
