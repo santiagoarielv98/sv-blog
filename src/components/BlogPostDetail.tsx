@@ -7,6 +7,7 @@ import { Calendar, Linkedin, Tag } from 'lucide-react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
 import Link from 'next/link';
+import BlogLikesAndCommentsWithReplies from './BlogLikesAndCommentsWithReplies';
 
 export default async function BlogPostDetail({ slug }: { slug: string }) {
   const queryClient = getQueryClient();
@@ -50,7 +51,7 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
             alt="AI concept"
             className="w-full h-64 object-cover rounded-lg mb-6"
           />
-          <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none max-w-none">
+          <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl sm:m-5 focus:outline-none max-w-none">
             {<MDXRemote source={post.content} />}
           </div>
           <div className="mt-6 flex flex-wrap gap-2">
@@ -85,6 +86,9 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
                 <span className="sr-only">Share on LinkedIn</span>
               </Button>
             </div>
+          </div>
+          <div className="mt-8 border-t pt-6">
+            <BlogLikesAndCommentsWithReplies />
           </div>
         </article>
 
