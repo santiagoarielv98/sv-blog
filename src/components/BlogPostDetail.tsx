@@ -17,6 +17,8 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
     queryFn: () => getPost(slug as string),
   });
 
+  console.log(post);
+
   return (
     <main className="container mx-auto px-4 py-8">
       <div className="flex flex-col md:flex-row gap-8">
@@ -88,7 +90,7 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
             </div>
           </div>
           <div className="mt-8 border-t pt-6">
-            <BlogLikesAndCommentsWithReplies slug={slug} />
+            <BlogLikesAndCommentsWithReplies />
           </div>
         </article>
 
