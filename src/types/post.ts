@@ -15,6 +15,7 @@ export interface Post {
   author: Author;
   created_at: string;
   thumbnail: string;
+  likesCount: number;
 }
 
 export interface CreatePost {

@@ -88,7 +88,7 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
             </div>
           </div>
           <div className="mt-8 border-t pt-6">
-            <BlogLikesAndCommentsWithReplies />
+            <BlogLikesAndCommentsWithReplies slug={slug} />
           </div>
         </article>
 
