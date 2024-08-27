@@ -12,7 +12,6 @@ export default function MostUsedTags() {
     queryKey: ["tags"],
     queryFn: getMostUsedTags
   });
-  console.log(tags)
   return (
 
     <main className="container mx-auto px-4 py-8">

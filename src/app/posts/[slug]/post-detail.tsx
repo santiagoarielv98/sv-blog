@@ -47,8 +47,9 @@ function PostDetail() {
             <h1>{data.title}</h1>
             <article
                 className='prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none'
-                dangerouslySetInnerHTML={{ __html: data.content! }}
-            ></article>
+            >
+                {data.content}
+            </article>
         </div>
     )
 }

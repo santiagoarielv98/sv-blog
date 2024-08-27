@@ -9,14 +9,25 @@ import { Calendar, Linkedin, Tag } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import type { MDXRemoteSerializeResult } from 'next-mdx-remote';
+import { MDXRemote } from 'next-mdx-remote'
+import { serialize } from 'next-mdx-remote/serialize'
+import { useEffect, useState } from "react";
 
 export default function BlogPostDetail() {
+  const [content, setContent] = useState<MDXRemoteSerializeResult | null>(null);
   const { slug }: { slug: string } = useParams();
 
   const { data: post } = useQuery({
     queryKey: ["posts", slug],
     queryFn: () => getPost(slug as string),
   });
+
+  useEffect(() => {
+    if (post?.content) {
+      serialize(post.content, { parseFrontmatter: true }).then(setContent);
+    }
+  }, [post?.content]);
 
   return (
     <main className="container mx-auto px-4 py-8">
@@ -39,32 +50,15 @@ export default function BlogPostDetail() {
           <Image
             width={800}
             height={400}
-            src={post?.thumbnail ?? ''}
+            src='https://picsum.photos/seed/picsum/200/300'
             alt="AI concept"
             className="w-full h-64 object-cover rounded-lg mb-6"
           />
-          <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none max-w-none" dangerouslySetInnerHTML={{
-            __html: post?.content ?? ''
-          }} />
-          {/* <p>
-              Artificial Intelligence (AI) is rapidly evolving, transforming industries and reshaping our daily lives.
-              From autonomous vehicles to advanced healthcare diagnostics, AI is pushing the boundaries of what&apos;s possible.
-            </p>
-            <h2>The Impact of AI on Various Sectors</h2>
-            <p>
-              AI is making significant strides in numerous fields:
-            </p>
-            <ul>
-              <li>Healthcare: AI is improving diagnosis accuracy and drug discovery processes.</li>
-              <li>Finance: AI-powered algorithms are enhancing fraud detection and risk assessment.</li>
-              <li>Education: Personalized learning experiences are being created with AI.</li>
-              <li>Transportation: Self-driving cars and optimized traffic management systems are becoming a reality.</li>
-            </ul>
-            <p>
-              As AI continues to advance, it&apos;s crucial to consider both its potential benefits and the ethical implications
-              that come with such powerful technology.
-            </p>
-          </div> */}
+          <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none max-w-none" >
+            {content &&
+              <MDXRemote {...content} />
+            }
+          </div>
           <div className="mt-6 flex flex-wrap gap-2">
             {
               post?.tags.map((tag) => (
@@ -128,7 +122,8 @@ export default function BlogPostDetail() {
                     <Image
                       width={80}
                       height={80}
-                      src={`/placeholder.svg?height=80&width=80&text=${index + 1}`}
+                      // src={`/placeholder.svg?height=80&width=80&text=${index + 1}`}
+                      src='https://picsum.photos/seed/picsum/80/80'
                       alt={post}
                       className="w-20 h-20 object-cover rounded"
                     />
