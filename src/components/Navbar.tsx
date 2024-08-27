@@ -23,6 +23,9 @@ function Navbar() {
           <Link href="/create" className="hover:underline">
             Create
           </Link>
+          <Link href="/profile/me" className="hover:underline">
+            Profile
+          </Link>
         </nav>
         <Button variant="ghost" size="icon" className="md:hidden">
           <Menu className="h-6 w-6" />
