@@ -1,21 +1,24 @@
-import BlogPostDetail from '@/components/BlogPostDetail';
-import { getPost } from '@/lib/api';
-import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
-
+import BlogPostDetail from "@/components/BlogPostDetail";
+import { getPost } from "@/lib/api";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 
 async function PostDetailPage({ params }: { params: { slug: string } }) {
+  const queryClient = new QueryClient();
 
-    const queryClient = new QueryClient();
+  await queryClient.prefetchQuery({
+    queryKey: ["posts", params.slug],
+    queryFn: () => getPost(params.slug),
+  });
 
-    await queryClient.prefetchQuery({
-        queryKey: ["posts", params.slug],
-        queryFn: () => getPost(params.slug),
-    });
-
-    return (
-        <HydrationBoundary state={dehydrate(queryClient)}>
-            <BlogPostDetail />
-        </HydrationBoundary>)
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <BlogPostDetail />
+    </HydrationBoundary>
+  );
 }
 
-export default PostDetailPage
+export default PostDetailPage;

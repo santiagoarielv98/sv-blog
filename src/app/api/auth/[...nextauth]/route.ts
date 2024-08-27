@@ -3,8 +3,6 @@ import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-
-
 export const authOptions: NextAuthOptions = {
   providers: [
     Credentials({
@@ -33,7 +31,7 @@ export const authOptions: NextAuthOptions = {
               username: credentials?.username,
               password: credentials?.password,
             }),
-          }
+          },
         );
 
         if (res.ok) {
@@ -46,13 +44,13 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async jwt({ token, user }) {
-      return { ...token, ...user }
+      return { ...token, ...user };
     },
     async session({ session, token }) {
-      session.user = token
-      return { ...session, ...token }
-    }
-  }
+      session.user = token;
+      return { ...session, ...token };
+    },
+  },
 };
 const handler = NextAuth(authOptions);
 

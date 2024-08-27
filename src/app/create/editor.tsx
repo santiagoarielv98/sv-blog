@@ -1,35 +1,35 @@
-'use client'
+"use client";
 
-import { createPost } from '@/lib/api'
-import type { CreatePost } from '@/types/post'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { EditorContent, useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { createPost } from "@/lib/api";
+import type { CreatePost } from "@/types/post";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 function Tiptap() {
-
-  const [title, setTitle] = useState('')
-  const { data } = useSession()
-  const queryClient = useQueryClient()
-  const router = useRouter()
+  const [title, setTitle] = useState("");
+  const { data } = useSession();
+  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: (newPost: CreatePost) => createPost(newPost, data!.token!),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['posts'] })
-      router.push('/')
-    }
-  })
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      router.push("/");
+    },
+  });
 
   const editor = useEditor({
     extensions: [StarterKit],
     editorProps: {
       attributes: {
-        class: 'prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none',
-      }
+        class:
+          "prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl m-5 focus:outline-none",
+      },
     },
     content: `
     <h2>
@@ -61,34 +61,37 @@ function Tiptap() {
       — Mom
     </blockquote>
   `,
-  })
+  });
 
-  return <form
-    onSubmit={(e) => {
-      e.preventDefault()
-      mutation.mutate({
-        title: title,
-        content: editor!.getHTML()
-      })
-    }}
-  >
-    <input
-      required
-      minLength={3}
-      type="text"
-      value={title}
-      onChange={(e) => setTitle(e.target.value)}
-      placeholder="Title"
-      className="w-full border border-gray-300 rounded p-2"
-    />
-    <EditorContent editor={editor} />
-    <button
-      disabled={mutation.isPending}
-      type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-      Submit
-    </button>
-
-  </form>
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        mutation.mutate({
+          title: title,
+          content: editor!.getHTML(),
+        });
+      }}
+    >
+      <input
+        required
+        minLength={3}
+        type="text"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title"
+        className="w-full border border-gray-300 rounded p-2"
+      />
+      <EditorContent editor={editor} />
+      <button
+        disabled={mutation.isPending}
+        type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Submit
+      </button>
+    </form>
+  );
 }
 
-export default Tiptap
+export default Tiptap;

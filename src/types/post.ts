@@ -17,8 +17,6 @@ export interface Post {
   thumbnail: string;
 }
 
-
-
 export interface CreatePost {
   title: string;
   content: string;
