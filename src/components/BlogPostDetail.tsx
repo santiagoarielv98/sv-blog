@@ -1,20 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { getPost } from '@/lib/api';
+import { getArticle } from '@/lib/api';
 import getQueryClient from '@/lib/getQueryClient';
-import { Calendar, Linkedin, Tag } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
-import Link from 'next/link';
 import BlogLikesAndCommentsWithReplies from './BlogLikesAndCommentsWithReplies';
+import { REACTIONTYPES } from '@/lib/reactions';
+import { Button } from './ui/button';
 
 export default async function BlogPostDetail({ slug }: { slug: string }) {
   const queryClient = getQueryClient();
 
   const post = await queryClient.fetchQuery({
     queryKey: ['posts', slug],
-    queryFn: () => getPost(slug as string),
+    queryFn: () => getArticle(slug as string),
   });
 
   console.log(post);
@@ -37,12 +37,11 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
             <div className="flex items-center">
               <Calendar className="h-4 w-4 mr-2" />
               <span>
-                {post?.created_at &&
-                  new Date(post?.created_at).toLocaleDateString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                  })}
+                {new Date().toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
               </span>
             </div>
           </div>
@@ -56,37 +55,24 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
           <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl sm:m-5 focus:outline-none max-w-none">
             {<MDXRemote source={post.content} />}
           </div>
-          <div className="mt-6 flex flex-wrap gap-2">
-            {post?.tags.map((tag) => (
-              <Button
-                className="capitalize"
-                variant="outline"
-                size="sm"
-                key={tag.id}
-                asChild
-              >
-                <Link href={`/tags/${tag.name}`}>
-                  <Tag className="h-4 w-4 mr-2" />
-                  {tag.name}
-                </Link>
-              </Button>
-            ))}
-          </div>
           <div className="mt-8 border-t pt-6">
-            <h3 className="text-lg font-semibold mb-4">Share this post</h3>
-            <div className="flex space-x-4">
-              {/* <Button variant="outline" size="icon">
-                  <Facebook className="h-4 w-4" />
-                  <span className="sr-only">Share on Facebook</span>
-                </Button> */}
-              {/* <Button variant="outline" size="icon">
-                  <Twitter className="h-4 w-4" />
-                  <span className="sr-only">Share on Twitter</span>
-                </Button> */}
-              <Button variant="outline" size="icon">
-                <Linkedin className="h-4 w-4" />
-                <span className="sr-only">Share on LinkedIn</span>
-              </Button>
+            <h3 className="text-lg font-semibold mb-4">Reactions</h3>
+            <div className="flex items-center space-x-4">
+              {post?.reactions.map(
+                ({ type: reaction_type, count, isReacted }) => {
+                  const ReactionIcon = REACTIONTYPES[reaction_type].icon;
+                  return (
+                    <Button
+                      variant={isReacted ? 'default' : 'ghost'}
+                      size="icon"
+                      key={reaction_type}
+                    >
+                      <ReactionIcon className="h-4 w-4 mr-1" />
+                      <span>{count}</span>
+                    </Button>
+                  );
+                },
+              )}
             </div>
           </div>
           <div className="mt-8 border-t pt-6">

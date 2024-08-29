@@ -1,4 +1,4 @@
-import type { Article } from '@/types/article';
+import type { Article, ArticleDetail } from '@/types/article';
 import type { CreateComment } from '@/types/comments';
 import type { CreatePost, PostDetail } from '../types/post';
 
@@ -17,7 +17,7 @@ export async function getArticles(): Promise<Article[]> {
   return httpGet(`${baseUrl}/articles`).then((res) => res.json());
 }
 
-export async function getPost(slug: string): Promise<PostDetail> {
+export async function getArticle(slug: string): Promise<ArticleDetail> {
   return httpGet(`${baseUrl}/articles/${slug}`).then((res) => res.json());
 }
 

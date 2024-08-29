@@ -39,20 +39,22 @@ export default function BlogInterface() {
                     <Link href={`/posts/${post.slug}`}>Read More</Link>
                   </Button>
                   <div>
-                    {post.reactions.map(({ reaction_type, count }) => {
-                      const ReactionIcon = REACTIONTYPES[reaction_type].icon;
-                      return (
-                        <Button
-                          key={reaction_type}
-                          variant="ghost"
-                          className="mr-2"
-                          size="icon"
-                        >
-                          <ReactionIcon className="h-4 w-4 mr-1" />
-                          <span>{count}</span>
-                        </Button>
-                      );
-                    })}
+                    {post.reactions.map(
+                      ({ type: reaction_type, count, isReacted }) => {
+                        const ReactionIcon = REACTIONTYPES[reaction_type].icon;
+                        return (
+                          <Button
+                            key={reaction_type}
+                            variant={isReacted ? 'default' : 'ghost'}
+                            className="mr-2"
+                            size="icon"
+                          >
+                            <ReactionIcon className="h-4 w-4 mr-1" />
+                            <span>{count}</span>
+                          </Button>
+                        );
+                      },
+                    )}
                   </div>
                 </CardFooter>
               </Card>

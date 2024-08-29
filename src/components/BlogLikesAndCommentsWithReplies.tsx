@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { createComment, getPost, likePost, unlikePost } from '@/lib/api';
+import { createComment, getArticle, likePost, unlikePost } from '@/lib/api';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Send, ThumbsUp } from 'lucide-react';
 import { useParams } from 'next/navigation';
@@ -18,7 +18,7 @@ export default function BlogLikesAndCommentsWithReplies() {
 
   const { data: post } = useQuery({
     queryKey: ['posts', slug],
-    queryFn: () => getPost(slug as string),
+    queryFn: () => getArticle(slug as string),
   });
 
   const { mutate: likePostMutation, isPending } = useMutation({

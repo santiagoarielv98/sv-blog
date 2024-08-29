@@ -15,12 +15,25 @@ export interface Article {
 export interface Author {
   id: string;
   username: string;
-  profile_picture: null;
+  profile_picture: string;
+  email: string;
   bio?: string;
 }
 
 export interface Reaction {
-  reaction_type: CommentReactionType;
+  type: CommentReactionType;
   articleId: string;
   count: string;
+  isReacted?: boolean;
+}
+
+export interface ArticleDetail {
+  id: string;
+  title: string;
+  content: string;
+  summary: string;
+  thumbnail: null;
+  slug: string;
+  author: Author;
+  reactions: Reaction[];
 }
