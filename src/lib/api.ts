@@ -1,3 +1,4 @@
+import type { CreateComment } from '@/types/comments';
 import type { CreatePost, Post } from '../types/post';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -64,4 +65,19 @@ export async function unlikePost(id: string): Promise<Post> {
       Authorization: `Bearer ${token}`,
     }, */
   }).then((res) => (res.ok ? res.json() : Promise.reject(res)));
+}
+
+export async function createComment(
+  postId: string,
+  comment: CreateComment,
+  /* token: string, */
+): Promise<void> {
+  return httpGet(`${baseUrl}/articles/${postId}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      /* Authorization: `Bearer ${token}`, */
+    },
+    body: JSON.stringify(comment),
+  }).then((res) => res.json());
 }

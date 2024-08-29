@@ -10,20 +10,31 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import type { Comment } from '@/types/comments';
+import type { Comment, CreateComment } from '@/types/comments';
 import { MessageCircle, Send, ThumbsUp } from 'lucide-react';
+import React from 'react';
 
-const CommentComponent = ({ comment }: { comment: Comment }) => {
-  // const [isReplying, setIsReplying] = useState(false);
-  // const [replyContent, setReplyContent] = useState('');
+const CommentComponent = ({
+  comment,
+  onReply,
+}: {
+  comment: Comment;
+  onReply: (comment: CreateComment) => void;
+}) => {
+  const [isReplying, setIsReplying] = React.useState(false);
+  const [replyContent, setReplyContent] = React.useState('');
 
   const handleReplySubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // if (replyContent.trim()) {
-    // onReply(comment.id, replyContent);
-    // setReplyContent('');
-    // setIsReplying(false);
-    // }
+    if (replyContent.trim()) {
+      onReply({
+        content: replyContent,
+        parent_id: comment.id,
+      });
+      // onReply(comment.id, replyContent);
+      setReplyContent('');
+      setIsReplying(false);
+    }
   };
 
   return (
@@ -60,35 +71,29 @@ const CommentComponent = ({ comment }: { comment: Comment }) => {
         <Button
           variant="ghost"
           size="sm"
-          // onClick={() => setIsReplying(!isReplying)}
+          onClick={() => setIsReplying(!isReplying)}
           className="flex items-center gap-2"
         >
           <MessageCircle className="w-4 h-4" />
           Reply
         </Button>
       </CardFooter>
-      {
-        /* isReplying */ true && (
-          <CardContent>
-            <form onSubmit={handleReplySubmit} className="space-y-4">
-              <Textarea
-                placeholder="Write a reply..."
-                // value={replyContent}
-                // onChange={(e) => setReplyContent(e.target.value)}
-                className="w-full"
-              />
-              <Button
-                type="submit"
-                size="sm"
-                className="flex items-center gap-2"
-              >
-                <Send className="w-4 h-4" />
-                Post Reply
-              </Button>
-            </form>
-          </CardContent>
-        )
-      }
+      {isReplying && (
+        <CardContent>
+          <form onSubmit={handleReplySubmit} className="space-y-4">
+            <Textarea
+              placeholder="Write a reply..."
+              value={replyContent}
+              onChange={(e) => setReplyContent(e.target.value)}
+              className="w-full"
+            />
+            <Button type="submit" size="sm" className="flex items-center gap-2">
+              <Send className="w-4 h-4" />
+              Post Reply
+            </Button>
+          </form>
+        </CardContent>
+      )}
       {comment.replies?.length > 0 && (
         <CardContent>
           <div className="pl-6 border-l-2 border-muted">
@@ -96,7 +101,9 @@ const CommentComponent = ({ comment }: { comment: Comment }) => {
               <CommentComponent
                 key={reply.id}
                 comment={reply}
-                // onReply={onReply}
+                onReply={(reply) =>
+                  onReply({ ...reply, parent_id: comment.id })
+                }
               />
             ))}
           </div>
