@@ -1,14 +1,14 @@
 // app/posts/posts.jsx
 'use client';
 
-import { getPosts } from '@/lib/api';
+import { getArticles } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 
 export default function Posts() {
   const { data } = useQuery({
     queryKey: ['posts'],
-    queryFn: () => getPosts(),
+    queryFn: () => getArticles(),
   });
 
   return (

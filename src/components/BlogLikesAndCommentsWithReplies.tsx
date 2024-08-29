@@ -8,7 +8,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Send, ThumbsUp } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import CommentComponent from './CommentComponent';
-import type { Post } from '@/types/post';
+import type { PostDetail } from '@/types/post';
 import type { CreateComment } from '@/types/comments';
 
 export default function BlogLikesAndCommentsWithReplies() {
@@ -28,9 +28,9 @@ export default function BlogLikesAndCommentsWithReplies() {
     onMutate: async ({ liked }) => {
       await queryClient.cancelQueries({ queryKey: ['posts', slug] });
 
-      const previousPost = queryClient.getQueryData<Post>(['posts', slug]);
+      const previousPost = queryClient.getQueryData<PostDetail>(['posts', slug]);
 
-      queryClient.setQueryData(['posts', slug], (old: Post) => {
+      queryClient.setQueryData(['posts', slug], (old: PostDetail) => {
         return {
           ...old,
           // liked:number

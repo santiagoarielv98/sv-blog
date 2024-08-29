@@ -1,5 +1,6 @@
+import type { Article } from '@/types/article';
 import type { CreateComment } from '@/types/comments';
-import type { CreatePost, Post } from '../types/post';
+import type { CreatePost, PostDetail } from '../types/post';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -12,18 +13,18 @@ async function httpGet(input: RequestInfo, init?: RequestInit) {
   });
 }
 
-export async function getPosts(): Promise<Post[]> {
+export async function getArticles(): Promise<Article[]> {
   return httpGet(`${baseUrl}/articles`).then((res) => res.json());
 }
 
-export async function getPost(slug: string): Promise<Post> {
+export async function getPost(slug: string): Promise<PostDetail> {
   return httpGet(`${baseUrl}/articles/${slug}`).then((res) => res.json());
 }
 
 export async function createPost(
   post: CreatePost,
   /* token: string, */
-): Promise<Post> {
+): Promise<PostDetail> {
   return httpGet(`${baseUrl}/articles`, {
     method: 'POST',
     headers: {
@@ -49,7 +50,7 @@ export async function getMostUsedTags(): Promise<
   return httpGet(`${baseUrl}/tags/most-used`).then((res) => res.json());
 }
 
-export async function likePost(id: string): Promise<Post> {
+export async function likePost(id: string): Promise<PostDetail> {
   return httpGet(`${baseUrl}/articles/${id}/like`, {
     method: 'POST',
     /*  headers: {
@@ -58,7 +59,7 @@ export async function likePost(id: string): Promise<Post> {
   }).then((res) => (res.ok ? res.json() : Promise.reject(res)));
 }
 
-export async function unlikePost(id: string): Promise<Post> {
+export async function unlikePost(id: string): Promise<PostDetail> {
   return httpGet(`${baseUrl}/articles/${id}/unlike`, {
     method: 'DELETE',
     /* headers: {

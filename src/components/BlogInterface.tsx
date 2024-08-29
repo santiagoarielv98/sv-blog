@@ -9,7 +9,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { getPosts } from '@/lib/api';
+import { getArticles } from '@/lib/api';
+import { REACTIONTYPES } from '@/lib/reactions';
 import { useQuery } from '@tanstack/react-query';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
@@ -17,7 +18,7 @@ import Link from 'next/link';
 export default function BlogInterface() {
   const { data: articles = [] } = useQuery({
     queryKey: ['posts'],
-    queryFn: () => getPosts(),
+    queryFn: () => getArticles(),
   });
   return (
     <main className="container mx-auto px-4 py-8">
@@ -37,6 +38,22 @@ export default function BlogInterface() {
                   <Button variant="outline" asChild>
                     <Link href={`/posts/${post.slug}`}>Read More</Link>
                   </Button>
+                  <div>
+                    {post.reactions.map(({ reaction_type, count }) => {
+                      const ReactionIcon = REACTIONTYPES[reaction_type].icon;
+                      return (
+                        <Button
+                          key={reaction_type}
+                          variant="ghost"
+                          className="mr-2"
+                          size="icon"
+                        >
+                          <ReactionIcon className="h-4 w-4 mr-1" />
+                          <span>{count}</span>
+                        </Button>
+                      );
+                    })}
+                  </div>
                 </CardFooter>
               </Card>
             ))}

@@ -3,7 +3,7 @@ import type { Comment } from './comments';
 import type { Tag } from './tags';
 import type { User } from './user';
 
-export interface Post {
+export interface PostDetail {
   id: string;
   title: string;
   summary: string;
