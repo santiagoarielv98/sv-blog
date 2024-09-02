@@ -294,81 +294,77 @@ export default function RichTextBlogEditor() {
   };
 
   return (
-    <main className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Create New Blog Post</h1>
-
-      <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
-        <div className="space-y-4">
-          <Input
-            required
-            minLength={3}
-            type="text"
-            placeholder="Enter your blog post title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="text-xl font-semibold"
-          />
-          <Card>
-            <CardHeader>
-              <MenuBar editor={editor} />
-            </CardHeader>
-            <CardContent className="p-4">
-              <EditorContent editor={editor} />
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Publishing Options</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <Checkbox id="draft" />
-                <Label htmlFor="draft">Save as draft</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Checkbox id="comments" />
-                <Label htmlFor="comments">Allow comments</Label>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="tags">Tags</Label>
-                <Input
-                  id="tags"
-                  placeholder="Enter tags separated by commas"
-                  value={tags}
-                  onChange={(e) => setTags(e.target.value)}
-                />
-              </div>
-              <div className="flex space-x-2">
-                <Button className="w-full" onClick={handleSave}>
-                  <Save className="w-4 h-4 mr-2" />
-                  Save
-                </Button>
-                <Button variant="outline" className="w-full">
-                  <Eye className="w-4 h-4 mr-2" />
-                  Preview
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Featured Image</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="flex items-center justify-center h-40 bg-muted rounded-lg">
-                <ImageIcon className="w-8 h-8 text-muted-foreground" />
-              </div>
-              <Button variant="outline" className="w-full mt-4">
-                Upload Image
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
+    <div className="grid gap-8 md:grid-cols-[2fr_1fr]">
+      <div className="space-y-4">
+        <Input
+          required
+          minLength={3}
+          type="text"
+          placeholder="Enter your blog post title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="text-xl font-semibold"
+        />
+        <Card>
+          <CardHeader>
+            <MenuBar editor={editor} />
+          </CardHeader>
+          <CardContent className="p-4">
+            <EditorContent editor={editor} />
+          </CardContent>
+        </Card>
       </div>
-    </main>
+
+      <div className="space-y-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Publishing Options</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center space-x-2">
+              <Checkbox id="draft" />
+              <Label htmlFor="draft">Save as draft</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="comments" />
+              <Label htmlFor="comments">Allow comments</Label>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="tags">Tags</Label>
+              <Input
+                id="tags"
+                placeholder="Enter tags separated by commas"
+                value={tags}
+                onChange={(e) => setTags(e.target.value)}
+              />
+            </div>
+            <div className="flex space-x-2">
+              <Button className="w-full" onClick={handleSave}>
+                <Save className="w-4 h-4 mr-2" />
+                Save
+              </Button>
+              <Button variant="outline" className="w-full">
+                <Eye className="w-4 h-4 mr-2" />
+                Preview
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Featured Image</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-center h-40 bg-muted rounded-lg">
+              <ImageIcon className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <Button variant="outline" className="w-full mt-4">
+              Upload Image
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
