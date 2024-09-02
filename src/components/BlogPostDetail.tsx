@@ -6,8 +6,6 @@ import { Calendar } from 'lucide-react';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
 import BlogLikesAndCommentsWithReplies from './BlogLikesAndCommentsWithReplies';
-import { REACTIONTYPES } from '@/lib/reactions';
-import { Button } from './ui/button';
 
 export default async function BlogPostDetail({ slug }: { slug: string }) {
   const queryClient = getQueryClient();
@@ -48,14 +46,14 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
           <Image
             width={800}
             height={400}
-            src="https://picsum.photos/seed/picsum/200/300"
+            src={post.thumbnail ?? ''}
             alt="AI concept"
             className="w-full h-64 object-cover rounded-lg mb-6"
           />
           <div className="prose prose-sm sm:prose-base lg:prose-lg xl:prose-2xl sm:m-5 focus:outline-none max-w-none">
             {<MDXRemote source={post.content} />}
           </div>
-          <div className="mt-8 border-t pt-6">
+          {/* <div className="mt-8 border-t pt-6">
             <h3 className="text-lg font-semibold mb-4">Reactions</h3>
             <div className="flex items-center space-x-4">
               {post?.reactions.map(
@@ -74,7 +72,7 @@ export default async function BlogPostDetail({ slug }: { slug: string }) {
                 },
               )}
             </div>
-          </div>
+          </div> */}
           <div className="mt-8 border-t pt-6">
             <BlogLikesAndCommentsWithReplies />
           </div>

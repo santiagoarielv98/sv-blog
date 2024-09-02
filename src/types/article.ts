@@ -9,7 +9,14 @@ export interface Article {
   slug: string;
   author: Author;
   totalReactions: number;
+  totalComments: number;
+  tags: Tag[];
   reactions: Reaction[];
+}
+
+export interface Tag {
+  id: string;
+  name: string;
 }
 
 export interface Author {
