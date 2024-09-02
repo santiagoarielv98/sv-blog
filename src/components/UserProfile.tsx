@@ -30,7 +30,7 @@ interface User {
 }
 
 export default function UserProfile() {
-  const [activeTab, setActiveTab] = useState('blogs');
+  const [_activeTab, setActiveTab] = useState('blogs');
 
   const user = {
     name: 'Jane Doe',
