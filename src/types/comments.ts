@@ -7,6 +7,7 @@ export interface Comment {
   replies: Comment[];
   parent: Comment | null;
   parent_id?: string | null;
+  reactionsCount?: number;
 }
 
 export interface CreateComment {

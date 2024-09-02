@@ -1,4 +1,5 @@
 import type { CommentReactionType } from '@/lib/constants';
+import type { Comment } from './comments';
 
 export interface Article {
   id: string;
@@ -9,7 +10,14 @@ export interface Article {
   slug: string;
   author: Author;
   totalReactions: number;
+  totalComments: number;
+  tags: Tag[];
   reactions: Reaction[];
+}
+
+export interface Tag {
+  id: string;
+  name: string;
 }
 
 export interface Author {
@@ -36,4 +44,5 @@ export interface ArticleDetail {
   slug: string;
   author: Author;
   reactions: Reaction[];
+  comments: Comment[];
 }

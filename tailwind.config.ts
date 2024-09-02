@@ -3,6 +3,7 @@ import animate from 'tailwindcss-animate';
 import typography from '@tailwindcss/typography';
 
 const config = {
+  safelist: ['z-10', 'z-20', 'z-30', 'z-40', 'z-50'],
   darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',

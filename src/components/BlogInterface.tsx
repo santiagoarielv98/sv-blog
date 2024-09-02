@@ -11,8 +11,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { getArticles } from '@/lib/api';
 import { REACTIONTYPES } from '@/lib/reactions';
+import { cn } from '@/lib/utils';
 import { useQuery } from '@tanstack/react-query';
-import { Search } from 'lucide-react';
+import { Search, MessageCircle, Hash } from 'lucide-react';
 import Link from 'next/link';
 
 export default function BlogInterface() {
@@ -29,40 +30,64 @@ export default function BlogInterface() {
             {articles.map((post) => (
               <Card key={post.id}>
                 <CardHeader>
-                  <CardTitle>{post.title}</CardTitle>
+                  <Link href={`/articles/${post.slug}`}>
+                    <CardTitle>{post.title}</CardTitle>
+                  </Link>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">{post.summary}</p>
                 </CardContent>
+                <CardContent>
+                  {post.tags
+                    .map((tag) => (
+                      <Button
+                        key={tag.id}
+                        variant="ghost"
+                        className="capitalize"
+                        asChild
+                      >
+                        <Link href={`/tags/${tag.name}`}>
+                          <Hash className="h-4 w-4 mr-2" />
+                          {tag.name}
+                        </Link>
+                      </Button>
+                    ))
+                    .slice(0, 4)}
+                </CardContent>
                 <CardFooter className="justify-between">
-                  <Button variant="outline" asChild>
-                    <Link href={`/posts/${post.slug}`}>Read More</Link>
+                  <Button variant="ghost">
+                    <MessageCircle className="h-4 w-4 mr-2" />
+                    {post.totalComments} Comments
                   </Button>
-                  <div>
-                    {post.reactions.map(
-                      ({ type: reaction_type, count, isReacted }) => {
+                  <Button variant="ghost">
+                    <div>
+                      {post.reactions.map(({ type: reaction_type }, index) => {
                         const ReactionIcon = REACTIONTYPES[reaction_type].icon;
                         return (
-                          <Button
+                          <div
                             key={reaction_type}
-                            variant={isReacted ? 'default' : 'ghost'}
-                            className="mr-2"
-                            size="icon"
+                            className={cn(
+                              'h-5 w-5 bg-gray-100 border border-white rounded-full inline-flex -ml-1.5 p-0.5 justify-center items-center',
+                              `z-${(post.reactions.length - index) * 10} relative`,
+                            )}
                           >
-                            <ReactionIcon className="h-4 w-4 mr-1" />
-                            <span>{count}</span>
-                          </Button>
+                            <ReactionIcon
+                              key={reaction_type}
+                              className="h-4 w-4"
+                            />
+                          </div>
                         );
-                      },
-                    )}
-                  </div>
+                      })}
+                    </div>
+                    {post.totalReactions} Reactions
+                  </Button>
                 </CardFooter>
               </Card>
             ))}
           </div>
         </div>
 
-        <aside className="md:w-1/3 space-y-6">
+        <aside className="md:w-1/3 space-y-6 ">
           <Card>
             <CardHeader>
               <CardTitle>Search</CardTitle>

@@ -66,7 +66,7 @@ const CommentComponent = ({
       <CardFooter className="flex justify-between">
         <Button variant="ghost" size="sm" className="flex items-center gap-2">
           <ThumbsUp className="w-4 h-4" />
-          {/* <span>{comment.likes}</span> */}0
+          {comment.reactionsCount} Likes
         </Button>
         <Button
           variant="ghost"
