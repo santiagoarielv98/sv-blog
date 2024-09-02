@@ -5,18 +5,18 @@ import type { CreatePost } from '@/types/post';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
-import { useSession } from 'next-auth/react';
+// import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 function Tiptap() {
   const [title, setTitle] = useState('');
-  const { data } = useSession();
+  // const { data } = useSession();
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const mutation = useMutation({
-    mutationFn: (newPost: CreatePost) => createPost(newPost, data!.token!),
+    mutationFn: (newPost: CreatePost) => createPost(newPost /* data!.token! */),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['posts'] });
       router.push('/');
@@ -70,6 +70,7 @@ function Tiptap() {
         mutation.mutate({
           title: title,
           content: editor!.getHTML(),
+          summary: editor!.getText().slice(0, 100),
         });
       }}
     >
